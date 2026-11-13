@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Trail Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--green:#244638;--cream:#F7F6F0;--white:#fff;--ink:#1c2a23;--muted:#5f6d65;--line:#e4e2d8;--accent:#244638;--on-accent:#fff;--shadow:0 10px 30px rgba(36,70,56,.14);
+--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cream:#121c17;--white:#1a2822;--ink:#eef0e8;--muted:#a3b0a8;--line:#2b3b33;--accent:#8fc4a5;--on-accent:#10211a;--shadow:0 10px 30px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--cream:#121c17;--white:#1a2822;--ink:#eef0e8;--muted:#a3b0a8;--line:#2b3b33;--accent:#8fc4a5;--on-accent:#10211a;--shadow:0 10px 30px rgba(0,0,0,.4)}
+html{scroll-padding-top:calc(110px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.55 var(--sans)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--cream);z-index:30}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,label:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;letter-spacing:-.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:700;background:var(--accent);color:var(--on-accent);transition:transform .15s,box-shadow .15s;text-decoration:none}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.big{font-size:1.15rem;padding:18px 34px;background:var(--cream);color:var(--green)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--cream);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;padding:12px 0;flex-wrap:wrap}
+.logo{font:600 1.45rem var(--serif);display:flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;margin-right:auto}
+.logo svg{width:26px;height:26px;fill:var(--accent)}
+nav{display:flex;gap:22px}
+nav a{color:var(--muted);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--ink)}
+.hero{position:relative;min-height:78vh;display:grid;align-items:end;color:#fff;overflow:hidden}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,38,30,.15),rgba(18,38,30,.78))}
+.hero .wrap{position:relative;z-index:1;padding-bottom:56px;padding-top:120px}
+.hero h1{font-size:clamp(2.4rem,7vw,5rem);line-height:1.05;max-width:12ch;animation:rise .9s ease both}
+.hero p{font-size:1.2rem;margin:14px 0 28px;opacity:.92;animation:rise .9s .15s ease both}
+.hero .btn{animation:rise .9s .3s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+section{padding:64px 0 8px}
+.head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.head h2{font-size:clamp(1.7rem,4vw,2.3rem)}
+.head p{margin:4px 0 0;color:var(--muted)}
+.albums{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.album{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:var(--white);border:0;padding:0;text-align:left;color:#fff;box-shadow:var(--shadow)}
+.album img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.album:hover img{transform:scale(1.05)}
+.album::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,25,18,.85))}
+.album .t{position:absolute;left:16px;right:16px;bottom:14px;z-index:1}
+.album h3{font-size:1.25rem}
+.album .t span{display:block;font-size:.9rem;opacity:.9}
+.album.add{background:var(--white);color:var(--accent);border:2px dashed var(--line);display:grid;place-items:center;box-shadow:none;font-weight:700}
+.album.add::after{display:none}
+.chip{display:inline-flex;gap:8px;align-items:center;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:6px 8px 6px 14px;font-size:.9rem}
+.chip button{border:0;background:var(--line);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;padding:0}
+.masonry{columns:3 260px;column-gap:16px}
+.ph{position:relative;break-inside:avoid;margin:0 0 16px;border-radius:18px;overflow:hidden;background:var(--white);cursor:zoom-in;animation:pop .45s ease both}
+@keyframes pop{from{opacity:0;transform:scale(.96)}}
+.ph img{width:100%;height:auto;transition:transform .4s}
+.ph:hover img{transform:scale(1.03)}
+.ph figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 10px;color:#fff;font-size:.85rem;background:linear-gradient(transparent,rgba(10,25,18,.75));display:flex;flex-direction:column;pointer-events:none}
+.ph figcaption b{font-size:.95rem}
+.heart{position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:5px;border:0;border-radius:999px;padding:6px 11px;background:rgba(255,255,255,.92);color:#244638;font-weight:700;font-size:.85rem}
+.heart.on svg{fill:#c4453a;stroke:#c4453a}
+.heart.on{color:#c4453a}
+.memory{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;background:var(--white);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
+.memory img{border-radius:16px;width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in}
+.memory h3{font-size:1.6rem;margin-bottom:6px}
+.memory p{color:var(--muted);margin:0 0 18px}
+footer{margin-top:80px;background:var(--green);color:#F7F6F0;text-align:center;padding:48px 20px calc(48px + 70px)}
+footer p{font:400 1.3rem var(--serif);margin:0 0 6px}
+footer small{opacity:.7}
+.fab{display:none;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:15;box-shadow:var(--shadow);padding:16px 24px;font-size:1.05rem}
+.ov{position:fixed;inset:0;z-index:40;background:rgba(10,22,16,.6);display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
+.ov.open{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.sheet{background:var(--white);border-radius:24px;width:min(560px,100%);max-height:92vh;overflow:auto;padding:24px;animation:pop .25s ease}
+.sheet h2{font-size:1.6rem;margin-bottom:16px}
+.x{border:0;background:var(--line);border-radius:50%;width:36px;height:36px;display:grid;place-items:center;padding:0}
+.row{display:flex;justify-content:space-between;align-items:start}
+label.f{display:block;font-weight:500;font-size:.9rem;margin:14px 0 6px}
+input[type=text],input[type=date],select{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink);font:inherit}
+.pick{display:flex;flex-direction:column;align-items:center;gap:6px;border:2px dashed var(--accent);border-radius:18px;padding:28px 16px;text-align:center;cursor:pointer;font-weight:700;color:var(--accent);background:var(--cream)}
+.pick small{font-weight:400;color:var(--muted)}
+.pick input{position:absolute;opacity:0;width:1px;height:1px}
+.prev{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;margin-top:14px}
+.prev div{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden}
+.prev img{width:100%;height:100%;object-fit:cover}
+.prev button{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;display:grid;place-items:center;padding:0}
+.acts{display:flex;gap:10px;margin-top:20px}
+.acts .btn{flex:1}
+.lb{position:fixed;inset:0;z-index:50;background:#0b1510;color:#fff;display:none;grid-template-columns:1fr 340px}
+.lb.open{display:grid;animation:fade .2s}
+.lb .stage{position:relative;display:grid;place-items:center;min-height:0;padding:56px 56px 24px}
+.lb .stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:14px}
+.nv{position:absolute;top:50%;translate:0 -50%;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;padding:0}
+.lb .side{background:#14211a;padding:22px;display:flex;flex-direction:column;gap:12px;min-height:0;overflow:auto}
+.lb .x{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:12px;background:rgba(255,255,255,.16);color:#fff;z-index:2}
+.lb .heart{position:static;width:max-content}
+.cm{flex:1;min-height:60px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.cm p{margin:0;font-size:.92rem}
+.cm b{color:#9fd4b6}
+.cm-f{display:flex;gap:8px}
+.cm-f input{background:#1f3027;border-color:#2e443a;color:#fff}
+@media (max-width:820px){
+.lb.open{grid-template-rows:1fr auto;grid-template-columns:1fr}
+.lb .stage{padding:56px 8px 8px}
+.lb .side{max-height:42vh}
+.memory{grid-template-columns:1fr}
+.fab{display:inline-flex}
+.bar nav{order:3;width:100%;justify-content:space-between;gap:10px}
+.bar{gap:10px}
+.hero{min-height:70vh}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+ <a class="logo" href="#top"><svg viewBox="0 0 24 24"><path d="M2 20 9.5 6l3.5 6 2-3L22 20z"/></svg>The Trail Club</a>
+ <nav><a href="#albums">Albums</a><a href="#memories">Our Memories</a><a href="#memory">Memory of the Day</a></nav>
+ <button class="btn" data-act="upload"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Upload Photos</button>
+</div></header>
+
+<main id="top">
+<div class="hero">
+ <img id="heroImg" alt="Hikers on a misty ridge at sunrise">
+ <div class="wrap">
+  <h1>Every trail leaves a story.</h1>
+  <p>Our adventures, our people, our memories.</p>
+  <button class="btn big" data-act="upload">+ Upload Photos</button>
+ </div>
+</div>
+
+<section id="albums"><div class="wrap">
+ <div class="head"><div><h2>Hiking albums</h2><p>One album for every trail we’ve walked.</p></div></div>
+ <div class="albums" id="albumGrid"></div>
+</div></section>
+
+<section id="memories"><div class="wrap">
+ <div class="head"><div><h2>Our Memories</h2><p id="count"></p></div><div id="filter"></div></div>
+ <div class="masonry" id="gallery"></div>
+</div></section>
+
+<section id="memory"><div class="wrap">
+ <div class="head"><div><h2>Memory of the Day</h2><p>A look back at an older trail.</p></div></div>
+ <div class="memory" id="mod"></div>
+</div></section>
+</main>
+
+<footer><p>Good trails. Great friends. Memories that stay.</p><small>The Trail Club · a private space for our hikes</small></footer>
+<button class="btn fab" data-act="upload"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Upload Photos</button>
+
+<div class="ov" id="upOv"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="upT">
+ <div class="row"><h2 id="upT">Upload photos</h2><button class="x" data-act="close" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+ <label class="pick" id="pickBtn"><svg class="i" viewBox="0 0 24 24" style="width:34px;height:34px"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="m21 16-5-5-8 8"/></svg>+ Select photos<small>Choose several from your gallery at once</small>
+  <input type="file" id="file" accept="image/*" multiple></label>
+ <div class="prev" id="prev"></div>
+ <label class="f" for="albumSel">Album</label>
+ <select id="albumSel"></select>
+ <label class="f" for="who">Your name</label>
+ <input type="text" id="who" placeholder="e.g. Wanjiru" autocomplete="given-name">
+ <div class="acts"><button class="btn ghost" data-act="newAlbum" type="button">New album</button><button class="btn" id="goUp" data-act="doUpload" disabled>Upload</button></div>
+</div></div>
+
+<div class="ov" id="alOv"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="alT">
+ <div class="row"><h2 id="alT">Create album</h2><button class="x" data-act="close" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+ <label class="f" for="alName">Album name</label><input type="text" id="alName" placeholder="Sunrise on the escarpment">
+ <label class="f" for="alPlace">Destination</label><input type="text" id="alPlace" placeholder="Mount Longonot, Kenya">
+ <label class="f" for="alDate">Hiking date</label><input type="date" id="alDate">
+ <div class="acts"><button class="btn ghost" data-act="close">Cancel</button><button class="btn" data-act="saveAlbum">Create album</button></div>
+</div></div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+ <button class="x" data-act="close" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+ <div class="stage"><button class="nv" style="left:10px" data-act="prev" aria-label="Previous photo"><svg class="i" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button><img id="lbImg" alt=""><button class="nv" style="right:10px" data-act="next" aria-label="Next photo"><svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>
+ <div class="side"><div id="lbMeta"></div><div class="cm" id="cm"></div>
+  <div class="cm-f"><input type="text" id="cmIn" placeholder="Add a comment" aria-label="Add a comment"><button class="btn" data-act="comment">Post</button></div></div>
+</div>
+<div class="toast" id="toast" style="position:fixed;left:50%;bottom:90px;translate:-50% 0;background:#244638;color:#fff;padding:12px 20px;border-radius:999px;z-index:60;display:none;box-shadow:0 10px 30px rgba(0,0,0,.3)"></div>
+
+<script>
+/* ---------- Sample photographs (generated landscapes, no network needed) ---------- */
+const THEMES={
+ dawn:['#f6b98c','#fbe6c8','#fff3d6','#8aa796','#5b8068','#2f5a47','#1c3a2e'],
+ forest:['#9fc7b4','#e3efe3','#f7f6d8','#6fa08a','#3f7a63','#244638','#143026'],
+ alpine:['#8fb3d1','#e6eef2','#ffffff','#9db2c2','#6c8798','#3d5a4c','#233f33'],
+ dusk:['#5b4a7a','#f0a27c','#ffd9a8','#6d5a7e','#44456b','#244638','#12281f'],
+ lake:['#7cc0c4','#e0f2ec','#fffbe0','#5f9c97','#357a74','#244638','#16372c']};
+function rng(s){return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
+function scene(seed,w,h,t){
+ const r=rng(seed*7919+13),T=THEMES[t];
+ let s=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${h}' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${T[0]}'/><stop offset='1' stop-color='${T[1]}'/></linearGradient></defs><rect width='${w}' height='${h}' fill='url(#g)'/><circle cx='${w*(.2+r()*.6)}' cy='${h*(.18+r()*.2)}' r='${Math.min(w,h)*.09}' fill='${T[2]}' opacity='.9'/>`;
+ for(let i=0;i<3;i++){const y=h*(.5+i*.14),a=h*(.2-i*.04);let p=`M0 ${h}L0 ${y}`;for(let x=0;x<=w+1;x+=w/8)p+=`L${x} ${y-r()*a}`;s+=`<path d='${p}L${w} ${h}Z' fill='${T[3+i]}'/>`}
+ for(let i=0;i<16;i++){const x=r()*w,th=h*(.1+r()*.13);s+=`<path d='M${x} ${h-th}L${x+th*.24} ${h}L${x-th*.24} ${h}Z' fill='${T[6]}'/>`}
+ return'data:image/svg+xml,'+encodeURIComponent(s+'</svg>')
+}
+const DAY=864e5,ago=d=>new Date(Date.now()-d*DAY).toISOString();
+
+/* ---------- Data layer: swap these functions for real API calls later ---------- */
+const db={
+ albums:[
+  {id:'a1',name:'Ngong Hills Ridge',place:'Ngong Hills, Kenya',date:ago(150),cover:scene(11,800,1000,'dawn')},
+  {id:'a2',name:'Into the Gorge',place:'Hell’s Gate, Naivasha',date:ago(95),cover:scene(22,800,1000,'alpine')},
+  {id:'a3',name:'Crater Rim Loop',place:'Mount Longonot, Kenya',date:ago(40),cover:scene(33,800,1000,'forest')},
+  {id:'a4',name:'Mist over the Aberdares',place:'Aberdare Ranges, Kenya',date:ago(9),cover:scene(44,800,1000,'lake')}],
+ photos:[],comments:{},
+ seed(){
+  const n=['Wanjiru','Otieno','Amina','Kip'],th=['dawn','alpine','forest','lake','dusk'];
+  const dims=[[800,1000],[900,600],[800,800],[800,1100],[1000,650]];
+  for(let i=0;i<15;i++){const d=dims[i%5],al=this.albums[i%4];
+   this.photos.push({id:'p'+i,src:scene(i+3,d[0],d[1],th[(i*2)%5]),album:al.id,by:n[i%4],date:new Date(+new Date(al.date)+(i%3)*DAY).toISOString(),hearts:(i*3)%7,liked:false,w:d[0],h:d[1]})}
+  this.comments.p0=[{by:'Amina',text:'That light at the summit was unreal.'}];this.comments.p4=[{by:'Kip',text:'Best lunch spot of the year.'}];
+ },
+ addPhotos(list){this.photos.unshift(...list)},
+ addAlbum(a){this.albums.unshift(a)},
+ toggleHeart(id){const p=this.photos.find(x=>x.id==id);p.liked=!p.liked;p.hearts+=p.liked?1:-1},
+ addComment(id,by,text){(this.comments[id]=this.comments[id]||[]).push({by,text})}
+};
+db.seed();
+
+/* ---------- Helpers ---------- */
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=d=>new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+const heartI='<svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9-9.2C1.8 7.6 4 5 6.800 5c1.900 0 3.200 1 5.200 3 2-2 3.300-3 5.200-3C20 5 22.200 7.600 21 10.800 19 15.600 12 20 12 20z"/></svg>';
+const albumOf=id=>db.albums.find(a=>a.id==id);
+let filter=null,pending=[],lbList=[],lbIdx=0,who='';
+
+/* ---------- Rendering ---------- */
+function heartBtn(p){return`<button class="heart ${p.liked?'on':''}" data-act="heart" data-id="${p.id}" aria-label="Heart this photo" aria-pressed="${p.liked}">${heartI}<span>${p.hearts}</span></button>`}
+function renderAlbums(){
+ $('#albumGrid').innerHTML=db.albums.map(a=>{const c=db.photos.find(p=>p.album==a.id),n=db.photos.filter(p=>p.album==a.id).length;
+  return`<button class="album" data-act="filter" data-id="${a.id}"><img src="${c?c.src:a.cover}" alt="" loading="lazy"><div class="t"><h3>${esc(a.name)}</h3><span>${esc(a.place)}</span><span>${fmt(a.date)} · ${n} photos</span></div></button>`}).join('')
+  +`<button class="album add" data-act="newAlbum"><span><svg class="i" viewBox="0 0 24 24" style="width:30px;height:30px"><path d="M12 5v14M5 12h14"/></svg><br>Create album</span></button>`;
+ $('#albumSel').innerHTML='<option value="">No album</option>'+db.albums.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('');
+}
+function renderGallery(fresh=0){
+ const list=db.photos.filter(p=>!filter||p.album==filter);lbList=list;
+ $('#gallery').innerHTML=list.map((p,i)=>`<figure class="ph" data-act="open" data-id="${p.id}" style="${i<fresh?'':'animation-delay:'+Math.min(i,12)*30+'ms'}"><img src="${p.src}" alt="Photo by ${esc(p.by)}" loading="lazy" ${p.w?`width="${p.w}" height="${p.h}"`:''}>${heartBtn(p)}<figcaption><b>${esc(p.by)}</b><span>${fmt(p.date)}</span></figcaption></figure>`).join('')||'<p>No photos here yet. Upload the first one.</p>';
+ $('#count').textContent=db.photos.length+' photos shared by the group';
+ $('#filter').innerHTML=filter?`<span class="chip">${esc(albumOf(filter).name)}<button data-act="clear" aria-label="Show all photos"><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span>`:'';
+}
+function renderMod(){
+ const old=db.photos.filter(p=>Date.now()-new Date(p.date)>30*DAY),p=old[Math.floor(Math.random()*old.length)]||db.photos[0];if(!p)return;
+ const a=albumOf(p.album);
+ $('#mod').innerHTML=`<img src="${p.src}" alt="Photo by ${esc(p.by)}" data-act="open" data-id="${p.id}"><div><h3>${a?esc(a.name):'A day on the trail'}</h3><p>${a?esc(a.place)+' · ':''}${fmt(p.date)}<br>Shared by ${esc(p.by)}</p><button class="btn" data-act="shuffle">Show another memory</button></div>`;
+}
+function renderPrev(){
+ $('#prev').innerHTML=pending.map(f=>`<div><img src="${f.url}" alt=""><button data-act="rm" data-id="${f.id}" aria-label="Remove photo"><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`).join('');
+ const b=$('#goUp');b.disabled=!pending.length;b.textContent=pending.length?`Upload ${pending.length} photo${pending.length>1?'s':''}`:'Upload';
+}
+function renderLb(){
+ const p=lbList[lbIdx];if(!p)return;const a=albumOf(p.album);
+ $('#lbImg').src=p.src;$('#lbImg').alt='Photo by '+p.by;
+ $('#lbMeta').innerHTML=`<h3>${esc(p.by)}</h3><p style="margin:2px 0 12px;opacity:.75">${fmt(p.date)}${a?' · '+esc(a.name):''}</p>${heartBtn(p)}`;
+ $('#cm').innerHTML=(db.comments[p.id]||[]).map(c=>`<p><b>${esc(c.by)}</b> ${esc(c.text)}</p>`).join('')||'<p style="opacity:.6">No comments yet. Say something kind.</p>';
+}
+
+/* ---------- Overlays ---------- */
+const show=id=>{$(id).classList.add('open');document.body.style.overflow='hidden'};
+function closeAll(){document.querySelectorAll('.open').forEach(e=>e.classList.remove('open'));document.body.style.overflow=''}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',2600)}
+function openLb(id,list){lbList=list||lbList;lbIdx=Math.max(0,lbList.findIndex(p=>p.id==id));if(!lbList.length)return;show('#lb');renderLb()}
+function step(d){lbIdx=(lbIdx+d+lbList.length)%lbList.length;renderLb()}
+
+/* ---------- Actions ---------- */
+const A={
+ upload(){pending=[];renderPrev();show('#upOv')},
+ close:closeAll,
+ newAlbum(){$('#alName').value=$('#alPlace').value='';$('#alDate').valueAsDate=new Date();document.querySelectorAll('#upOv').forEach(e=>e.classList.remove('open'));show('#alOv')},
+ saveAlbum(){
+  const name=$('#alName').value.trim();if(!name){$('#alName').focus();return}
+  const a={id:'a'+Date.now(),name,place:$('#alPlace').value.trim()||'Somewhere beautiful',date:$('#alDate').value||ago(0),cover:scene(name.length*37+5,800,1000,Object.keys(THEMES)[name.length%5])};
+  db.addAlbum(a);renderAlbums();$('#albumSel').value=a.id;closeAll();toast('Album created');
+  if(pending.length)show('#upOv');
+ },
+ doUpload(){
+  if(!pending.length)return;who=$('#who').value.trim()||who||'A friend';
+  const now=new Date().toISOString(),al=$('#albumSel').value;
+  db.addPhotos(pending.map((f,i)=>({id:'u'+Date.now()+i,src:f.url,album:al,by:who,date:now,hearts:0,liked:false})));
+  const n=pending.length;pending=[];filter=null;closeAll();renderAlbums();renderGallery(n);
+  toast(`${n} photo${n>1?'s':''} added to Our Memories`);$('#memories').scrollIntoView();
+ },
+ rm(id){pending=pending.filter(f=>f.id!=id);renderPrev()},
+ filter(id){filter=id;renderGallery();$('#memories').scrollIntoView()},
+ clear(){filter=null;renderGallery()},
+ open(id){openLb(id,$('#mod').contains(event.target)?db.photos:lbList)},
+ heart(id){event.stopPropagation();db.toggleHeart(id);renderGallery();renderMod();if($('#lb').classList.contains('open'))renderLb()},
+ prev(){step(-1)},next(){step(1)},
+ comment(){const i=$('#cmIn'),t=i.value.trim();if(!t)return;db.addComment(lbList[lbIdx].id,who||'You',t);i.value='';renderLb()},
+ shuffle:renderMod
+};
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-act]');
+ if(t){if(t.dataset.act=='close'&&e.target.closest('.sheet,.lb')==null)return;A[t.dataset.act]?.(t.dataset.id);return}
+ if(e.target.classList.contains('ov'))closeAll();
+});
+$('#file').addEventListener('change',e=>{
+ [...e.target.files].forEach((f,i)=>pending.push({id:'f'+Date.now()+i,file:f,url:URL.createObjectURL(f)}));
+ e.target.value='';renderPrev();
+});
+$('#cmIn').addEventListener('keydown',e=>{if(e.key=='Enter')A.comment()});
+document.addEventListener('keydown',e=>{
+ if(e.key=='Escape')closeAll();
+ if($('#lb').classList.contains('open')&&document.activeElement.tagName!='INPUT'){if(e.key=='ArrowLeft')step(-1);if(e.key=='ArrowRight')step(1)}
+});
+
+/* ---------- Init ---------- */
+$('#heroImg').src=scene(91,1600,1000,'dawn');
+renderAlbums();renderGallery();renderMod();
+</script>
+</body>
+</html>
